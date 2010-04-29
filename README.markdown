@@ -1,19 +1,30 @@
 SUMMARY
 =======
 
-This extension creates sitemaps in .html, .txt, and .xml (google sitemap) formats.
+This Spree extension generates dynamic, seo-friendly sitemaps on the fly in html, xml and txt formats.
+
+This extension is compatible with the [static_content][1] extension and will check for content in the Page table.
+
+In order to avoid an seo penalty for duplicate content, products are only listed once at /product/_productName_
 
 INSTALLATION
 ------------
 
-1. Clone the git repo to SPREE_ROOT/vendor/extensions/sitemaps
+1. Install the extension
 
-      git clone git://github.com/stephp/spree-sitemaps.git sitemaps
+      script/extension install git@github.com:polomasta/dynamic-spree-sitemaps.git
 
-2. Add link to sitemap to shared element on frontend or to a view via a hook. For example, I have add '<p><%= link_to 'Sitemap', '/sitemap.html' %></p>' to shared/_footer.html.erb.
+2. Rename the directory to sitemaps
+    
+    mv vendor/extensions/dynamic-spree-sitemaps vendor/extensions/sitemaps
+
+3. Add link to sitemap to a view
+    <%= link_to 'Sitemap', '/sitemap' %>
 
 The sitemaps are accessible at public_domain/sitemap.html, public_domain/sitemap.xml, and public_domain/sitemap.txt
 
-Development of this extension is sponsored by [End Point][1].
+Hat tip [stephp][2] for doing all the heavy lifting with her [spree-sitemaps][3] extension.
 
-[1]: http://www.endpoint.com/
+[1]: http://ext.spreecommerce.com/extensions/2-static-content
+[2]: http://github.com/stephp
+[3]: http://ext.spreecommerce.com/extensions/3-spree-sitemaps
