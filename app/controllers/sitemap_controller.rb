@@ -2,9 +2,17 @@ class SitemapController < Spree::BaseController
   def index
     @public_dir = url_for ( :controller => '/' )
     
-    @products = Products.active.find(:all)
-    @taxons = Taxon.all
-    @pages = Page.all
+    @products = Product.active.find(:all)
+    @taxonomies = Taxonomy.all
+    
+    # Get Pages from static_content extension
+    slugs_to_reject = ["sidebar"] # if want to exlude pages from the sitemap, enter the slugs here
+    slugs = []
+    sitemap_slugs = []
+    Page.all.each { |p| slugs << p.slug }
+    sitemap_slugs = slugs - slugs_to_reject
+    @pages = []
+    sitemap_slugs.each {|s| @pages << Page.find_by_slug(s) }
     
     respond_to do |format|
       format.html {  }
@@ -61,16 +69,17 @@ class SitemapController < Spree::BaseController
       pinfo['updated'] = product.updated_at
 
       nav[pinfo['link']] = pinfo				# store primary
-      if multiples_allowed
-        product.taxons.each do |taxon|
-          pinfo['depth'] = taxon.permalink.split('/').size + 1
-          taxon_link = taxon.permalink + 'p/' + product.permalink
-          new_pinfo = pinfo.clone
-          new_pinfo['link'] = taxon_link
-          nav[taxon_link] = new_pinfo
-        end
-      else
-      end
+      # cleaner sitemap xml without this
+      # if multiples_allowed
+      #         product.taxons.each do |taxon|
+      #           pinfo['depth'] = taxon.permalink.split('/').size + 1
+      #           taxon_link = taxon.permalink + 'p/' + product.permalink
+      #           new_pinfo = pinfo.clone
+      #           new_pinfo['link'] = taxon_link
+      #           nav[taxon_link] = new_pinfo
+      #         end
+      #       else
+      #       end
     end
     nav
   end

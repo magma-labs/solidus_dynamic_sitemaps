@@ -7,13 +7,17 @@
   <% end %>
   </ul>
 <% end %>
-<% unless @taxons.blank? %>
-  <h3>Categories</h3>
-  <ul>
-  <% @taxons.each do |taxon| %>
-    <li><%= link_to taxon.name, @public_dir + taxon.permalink %></li>
+<% unless @taxonomies.blank? %>  
+  <% @taxonomies.each do |taxonomy| %>
+    <% taxons = Taxon.find_all_by_taxonomy_id(taxonomy.id) %>
+    <h3><%= taxonomy.name %></h3>
+    <ul>
+    <% taxons.each do |taxon| %>
+      <% unless taxon.name == taxonomy.name %><li><%= link_to taxon.name, @public_dir + taxon.permalink %></li><% end %>
+    <% end %>
+    </ul>
   <% end %>
-  </ul>
+  
 <% end %>
 <% unless @products.blank? %>
   <h3>Products</h3>
