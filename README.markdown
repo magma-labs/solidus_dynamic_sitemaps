@@ -12,14 +12,15 @@ INSTALLATION
 
 1. Install the extension
 
-      script/extension install git@github.com:polomasta/dynamic-spree-sitemaps.git
+    `script/extension install git@github.com:polomasta/dynamic-spree-sitemaps.git`
 
 2. Rename the directory to sitemaps
     
-    mv vendor/extensions/dynamic-spree-sitemaps vendor/extensions/sitemaps
+    `mv vendor/extensions/dynamic-spree-sitemaps vendor/extensions/sitemaps`
 
 3. Add link to sitemap to a view
-    <%= link_to 'Sitemap', '/sitemap' %>
+    
+    `<%= link_to 'Sitemap', '/sitemap' %>`
 
 The sitemaps are accessible at public_domain/sitemap.html, public_domain/sitemap.xml, and public_domain/sitemap.txt
 
