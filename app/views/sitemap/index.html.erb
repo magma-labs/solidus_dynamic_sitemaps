@@ -1,5 +1,5 @@
 <h1>Sitemap</h1>
-<%= link_to 'Homepage', @public_dir %><br />
+<%= link_to Spree::Config[:site_name], @public_dir %><br />
 <% unless @pages.blank? %>
   <ul>
   <% @pages.each do |page| %>
