@@ -23,7 +23,7 @@
   <h3>Products</h3>
   <ul>
     <% @products.each do |product| %>
-      <li><%= link_to product.name, @public_dir + "/products/" + product.permalink %></li>
+      <li><%= link_to product.name, @public_dir + "products/" + product.permalink %></li>
     <% end %>
   </ul>
 <% end %>
