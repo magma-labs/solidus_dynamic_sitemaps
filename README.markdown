@@ -12,7 +12,7 @@ INSTALLATION
 
 1. Install the extension
 
-    `script/extension install git@github.com:polomasta/dynamic-spree-sitemaps.git`
+    `script/extension install git://github.com/polomasta/dynamic-spree-sitemaps.git`
 
 2. Rename the directory to sitemaps
     
