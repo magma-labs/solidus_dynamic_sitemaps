@@ -12,11 +12,11 @@ INSTALLATION
 
 1. Install the extension
 
-    `script/extension install git://github.com/polomasta/dynamic-spree-sitemaps.git`
+    `script/extension install git://github.com/pmisters/dynamic-spree-sitemaps.git`
 
 2. Rename the directory to sitemaps
     
-    `mv vendor/extensions/dynamic-spree-sitemaps vendor/extensions/sitemaps`
+    `mv vendor/extensions/dynamic_spree_sitemaps vendor/extensions/sitemaps`
 
 3. Add link to sitemap to a view
     

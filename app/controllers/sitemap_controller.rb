@@ -6,17 +6,16 @@ class SitemapController < Spree::BaseController
     @taxonomies = Taxonomy.all
     
     # Get Pages from static_content extension
-    slugs_to_reject = ["sidebar"] # if want to exlude pages from the sitemap, enter the slugs here
-    slugs = []
-    sitemap_slugs = []
-    Page.all.each { |p| slugs << p.slug }
-    sitemap_slugs = slugs - slugs_to_reject
-    @pages = []
-    sitemap_slugs.each {|s| @pages << Page.find_by_slug(s) }
+    @pages = _select_static_pages
     
     respond_to do |format|
       format.html {  }
-      format.xml { render :layout => false, :xml => _build_xml(_add_products_to_tax(_build_taxon_hash, true), @public_dir) }
+      format.xml do
+        nav = _build_taxon_hash
+        nav = _build_pages_hash nav
+        nav = _add_products_to_tax nav, true
+        render :layout => false, :xml => _build_xml(nav, @public_dir)
+      end
       format.text do
         @nav = _add_products_to_tax(_build_taxon_hash, true)
         render :layout => false
@@ -69,18 +68,32 @@ class SitemapController < Spree::BaseController
       pinfo['updated'] = product.updated_at
 
       nav[pinfo['link']] = pinfo				# store primary
-      # cleaner sitemap xml without this
-      # if multiples_allowed
-      #         product.taxons.each do |taxon|
-      #           pinfo['depth'] = taxon.permalink.split('/').size + 1
-      #           taxon_link = taxon.permalink + 'p/' + product.permalink
-      #           new_pinfo = pinfo.clone
-      #           new_pinfo['link'] = taxon_link
-      #           nav[taxon_link] = new_pinfo
-      #         end
-      #       else
-      #       end
     end
     nav
+  end
+  
+  def _build_pages_hash(nav)
+    return nav if @pages.empty?
+    
+    @pages.each do |page|
+      nav[page.slug] = {'name' => page.title,
+                        'link' => page.slug.gsub(/^\//, ''),
+                        'updated' => page.updated_at}
+    end
+    nav
+  end
+  
+  def _select_static_pages
+    pages = []
+    begin
+      slugs_to_reject = ["/on-main-page"]
+      Page.visible.each do |page|
+        pages << page unless slugs_to_reject.include?(page.slug)
+      end
+      
+    rescue NameError
+      pages = []
+    end
+    pages
   end
 end
