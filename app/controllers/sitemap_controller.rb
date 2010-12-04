@@ -1,6 +1,6 @@
 class SitemapController < Spree::BaseController
   def index
-    @public_dir = url_for  ('/') 
+    @public_dir = root_url
     
     @products = Product.active.find(:all)
     @taxonomies = Taxonomy.all
@@ -13,11 +13,11 @@ class SitemapController < Spree::BaseController
       format.xml do
         nav = _build_taxon_hash
         nav = _build_pages_hash nav
-        nav = _add_products_to_tax nav, true
+        nav = _add_products_to_tax nav, false
         render :layout => false, :xml => _build_xml(nav, @public_dir)
       end
       format.text do
-        @nav = _add_products_to_tax(_build_taxon_hash, true)
+        @nav = _add_products_to_tax(_build_taxon_hash, false)
         render :layout => false
       end
     end
