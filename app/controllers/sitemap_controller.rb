@@ -1,6 +1,6 @@
 class SitemapController < Spree::BaseController
   def index
-    @public_dir = url_for ( :controller => '/' )
+    @public_dir = url_for  ('/') 
     
     @products = Product.active.find(:all)
     @taxonomies = Taxonomy.all
