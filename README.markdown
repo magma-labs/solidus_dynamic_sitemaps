@@ -7,18 +7,19 @@ This extension is compatible with the [static_content][1] extension and will che
 
 In order to avoid an seo penalty for duplicate content, products are only listed once at /product/_productName_
 
+for rails 3 and spree >= 0.30.0
+
 INSTALLATION
 ------------
 
 1. Install the extension
 
-    `script/extension install git://github.com/pmisters/dynamic-spree-sitemaps.git`
+	gem 'dynamic_sitemaps', :git => 'git://github.com/bzt/spree_dynamic_sitemaps.git' 
+	bundle install 
+	
+	(rake dynamic_sitemaps:install)
 
-2. Rename the directory to sitemaps
-    
-    `mv vendor/extensions/dynamic_spree_sitemaps vendor/extensions/sitemaps`
-
-3. Add link to sitemap to a view
+2. Add link to sitemap to a view
     
     `<%= link_to 'Sitemap', '/sitemap' %>`
 
