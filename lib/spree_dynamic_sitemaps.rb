@@ -1,6 +1,6 @@
 require 'spree_core'
 
-module DynamicSitemaps
+module SpreeDynamicSitemaps
   class Engine < Rails::Engine
    
 	 config.autoload_paths += %W(#{config.root}/lib)
