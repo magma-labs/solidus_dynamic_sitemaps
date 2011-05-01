@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'dynamic_sitemaps'
-  s.version     = '0.0.1'
-  s.summary     = 'Add gem summary here'
+  s.name        = 'spree_dynamic_sitemaps'
+  s.version     = '0.50.0'
+  s.summary     = 'Google sitemap for Spree stores'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
 
@@ -11,10 +11,9 @@ Gem::Specification.new do |s|
   # s.homepage          = ''
   # s.rubyforge_project = ''
 
-  s.files        = Dir['README.textile', 'LICENSE', 'lib/**/*', 'app/**/*']
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_path = 'lib'
   s.requirements << 'none'
-
-  s.has_rdoc = true
 
 end
