@@ -1,9 +1,9 @@
-class SitemapController < Spree::BaseController
+class Spree::SitemapController < Spree::BaseController
   def index
     @public_dir = root_url
     
-    @products = Product.active.find(:all)
-    @taxonomies = Taxonomy.all
+    @products = Spree::Product.active.find(:all)
+    @taxonomies = Spree::Taxonomy.all
     
     # Get Pages from static_content extension
     @pages = _select_static_pages
@@ -25,7 +25,7 @@ class SitemapController < Spree::BaseController
 
   private
   def _build_xml(nav, public_dir)
-    returning '' do |output|
+    ''.tap do |output|
       xml = Builder::XmlMarkup.new(:target => output, :indent => 2) 
       xml.instruct!  :xml, :version => "1.0", :encoding => "UTF-8"
       xml.urlset( :xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9" ) {
@@ -49,7 +49,7 @@ class SitemapController < Spree::BaseController
 
   def _build_taxon_hash
     nav = Hash.new
-    Taxon.find(:all).each do |taxon|
+    Spree::Taxon.all.each do |taxon|
       tinfo = Hash.new
       tinfo['name'] = taxon.name
       tinfo['depth'] = taxon.permalink.split('/').size
@@ -61,7 +61,7 @@ class SitemapController < Spree::BaseController
   end
 
   def _add_products_to_tax(nav, multiples_allowed)
-    Product.active.find(:all).each do |product|
+    Spree::Product.active.find(:all).each do |product|
       pinfo = Hash.new
       pinfo['name'] = product.name
       pinfo['link'] = 'products/' + product.permalink	# primary
@@ -87,7 +87,7 @@ class SitemapController < Spree::BaseController
     pages = []
     begin
       slugs_to_reject = ["/on-main-page"]
-      Page.visible.each do |page|
+      Spree::Page.visible.each do |page|
         pages << page unless slugs_to_reject.include?(page.slug)
       end
       

@@ -9,7 +9,7 @@
 <% end %>
 <% unless @taxonomies.blank? %>  
   <% @taxonomies.each do |taxonomy| %>
-    <% taxons = Taxon.find_all_by_taxonomy_id(taxonomy.id) %>
+    <% taxons = Spree::Taxon.find_all_by_taxonomy_id(taxonomy.id) %>
     <h3><%= taxonomy.name %></h3>
     <ul>
     <% taxons.each do |taxon| %>
