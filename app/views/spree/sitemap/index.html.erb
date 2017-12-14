@@ -1,29 +1,34 @@
-<h1>Sitemap</h1>
-<%= link_to Spree::Config[:site_name], @public_dir %><br />
-<% unless @pages.blank? %>
+<h1><%= Spree.t(:sitemap) %></h1>
+<%= link_to Spree::Store.default.name, @public_dir %><br />
+
+<% unless @pages %>
   <ul>
   <% @pages.each do |page| %>
     <li><%= link_to page.title, @public_dir + page.slug %></li>
   <% end %>
   </ul>
 <% end %>
-<% unless @taxonomies.blank? %>  
+
+<% unless @taxonomies.blank? %>
   <% @taxonomies.each do |taxonomy| %>
-    <% taxons = Spree::Taxon.find_all_by_taxonomy_id(taxonomy.id) %>
+    <% taxons = Spree::Taxon.where(taxonomy_id: taxonomy.id) %>
+
     <h3><%= taxonomy.name %></h3>
+
     <ul>
     <% taxons.each do |taxon| %>
       <% unless taxon.name == taxonomy.name %><li><%= link_to taxon.name, @public_dir + taxon.permalink %></li><% end %>
     <% end %>
     </ul>
   <% end %>
-  
 <% end %>
-<% unless @products.blank? %>
+
+<% unless @products %>
   <h3>Products</h3>
+
   <ul>
     <% @products.each do |product| %>
-      <li><%= link_to product.name, @public_dir + "products/" + product.permalink %></li>
+      <li><%= link_to product.name, @public_dir + "products/" + product.slug %></li>
     <% end %>
   </ul>
 <% end %>

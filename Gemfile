@@ -1,6 +1,20 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
-gem 'spree', :git => 'git://github.com/spree/spree.git'
+branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
+gem 'solidus', github: 'solidusio/solidus', branch: branch
 
-# Specify your dependencies in spree_wishlist.gemspec
+if branch == 'master' || branch >= 'v2.0'
+  gem 'rails-controller-testing', group: :test
+else
+  gem 'rails_test_params_backport', group: :test
+end
+
+gem 'pg'
+gem 'sqlite3'
+gem 'mysql2'
+
+group :development, :test do
+  gem 'i18n-tasks', '~> 0.9' if branch == 'master'
+end
+
 gemspec
