@@ -1,24 +1,17 @@
-require 'simplecov'
-SimpleCov.start do
-  add_group 'Libraries', 'lib'
-  add_filter 'spec'
-end
+ENV['RAILS_ENV'] = 'test'
 
-ENV['RAILS_ENV'] ||= 'test'
-
-begin
-  require File.expand_path('../dummy/config/environment', __FILE__)
-rescue LoadError
-  puts 'Could not load dummy application. Please ensure you have run `bundle exec rake test_app`'
-  exit
-end
+require File.expand_path('../dummy/config/environment.rb', __FILE__)
 
 require 'rspec/rails'
-require 'ffaker'
+
+Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
+
+require 'solidus_dynamic_sitemaps/factories'
 
 RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
+  config.include Spree::TestingSupport::UrlHelpers
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
-  config.infer_base_class_for_anonymous_controllers = false
+  config.fail_fast = ENV['FAIL_FAST'] || false
 end
-
-Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |file| require file }
