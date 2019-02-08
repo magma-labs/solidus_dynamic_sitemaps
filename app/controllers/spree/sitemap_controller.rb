@@ -21,14 +21,26 @@ module Spree
     end
 
     def load_products
+      if gem_available?('solidus_multi_domain')
+        @products = Spree::Product.available.by_store(current_store)
+      end
+
       @products ||= Spree::Product.available
     end
 
     def load_taxonomies
+      if gem_available?('solidus_multi_domain')
+        @taxonomies = Spree::Taxonomy.where(store: current_store)
+      end
+
       @taxonomies ||= Spree::Taxonomy.all
     end
 
     def load_taxons
+      if gem_available?('solidus_multi_domain')
+        @taxons = Spree::Taxon.where(store: current_store)
+      end
+
       @taxons ||= Spree::Taxon.all
     end
 
