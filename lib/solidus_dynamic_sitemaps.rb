@@ -1,6 +1,4 @@
 require 'solidus_core'
-require 'solidus_backend'
-require 'solidus_frontend'
 require 'solidus_support'
 require 'sitemap_generator'
 require 'solidus_dynamic_sitemaps/engine'

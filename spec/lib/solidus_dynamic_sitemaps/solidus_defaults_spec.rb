@@ -9,8 +9,8 @@ RSpec.describe SolidusDynamicSitemaps::SolidusDefaults do
         self.entries = []
       end
 
-      def add(url, options)
-        self.entries << url
+      def add(url, _options)
+        entries << url
       end
     end
   end

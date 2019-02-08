@@ -40,7 +40,7 @@ module SolidusDynamicSitemaps::SolidusDefaults
 
       # don't include all the videos on the page to avoid duplicate title warnings
       primary_video = product.videos.first
-      opts.merge!(video: [video_options(primary_video.youtube_ref, product)])
+      opts[:video] = [video_options(primary_video.youtube_ref, product)]
     end
 
     add(product_path(product), opts)
@@ -49,13 +49,17 @@ module SolidusDynamicSitemaps::SolidusDefaults
   def add_pages(options = {})
     # TODO: this should be refactored to add_pages & add_page
 
-    Spree::Page.active.each do |page|
-      add(page.path, options.merge(lastmod: page.updated_at))
-    end if gem_available? 'spree_essential_cms'
+    if gem_available? 'spree_essential_cms'
+      Spree::Page.active.each do |page|
+        add(page.path, options.merge(lastmod: page.updated_at))
+      end
+    end
 
-    Spree::Page.visible.each do |page|
-      add(page.slug, options.merge(lastmod: page.updated_at))
-    end if gem_available? 'spree_static_content'
+    if gem_available? 'spree_static_content'
+      Spree::Page.visible.each do |page|
+        add(page.slug, options.merge(lastmod: page.updated_at))
+      end
+    end
   end
 
   def add_taxons(options = {})
@@ -96,8 +100,8 @@ module SolidusDynamicSitemaps::SolidusDefaults
   #   https://github.com/solidusio/solidus/blob/1-3-stable/core/app/controllers/spree/products_controller.rb#L41
   #
   def video_options(youtube_id, object = false)
-    ({ description: meta_data(object)[:description] } rescue {}).merge(
-      ({ title: [Spree::Config[:site_name], object.name].join(' - ') } rescue {})
+    ({ description: meta_data(object)[:description] } || {}).merge(
+      ({ title: [Spree::Config[:site_name], object.name].join(' - ') } || {})
     ).merge(
       thumbnail_loc: "http://img.youtube.com/vi/#{youtube_id}/0.jpg",
       player_loc: "http://www.youtube.com/v/#{youtube_id}",
