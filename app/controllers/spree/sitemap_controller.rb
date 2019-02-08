@@ -1,10 +1,10 @@
 module Spree
   class SitemapController < Spree::BaseController
-    before_action :load_public_url, only: [:index]
-    before_action :load_products, only: [:index]
-    before_action :load_taxonomies, only: [:index]
-    before_action :load_taxons, only: [:index]
-    before_action :load_pages, only: [:index]
+    before_action :load_public_url, only: :index
+    before_action :load_products, only: :index
+    before_action :load_taxonomies, only: :index
+    before_action :load_taxons, only: :index
+    before_action :load_pages, only: :index
 
     def index
       respond_to do |format|
