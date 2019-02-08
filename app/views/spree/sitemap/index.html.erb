@@ -1,34 +1,40 @@
 <h1><%= Spree.t(:sitemap) %></h1>
-<%= link_to Spree::Store.default.name, @public_dir %><br />
+<%= link_to Spree::Store.default.name, @public_url %><br />
 
-<% unless @pages %>
+<% if @pages.any? %>
   <ul>
   <% @pages.each do |page| %>
-    <li><%= link_to page.title, @public_dir + page.slug %></li>
+    <li><%= link_to page.title, @public_url + page.slug %></li>
   <% end %>
   </ul>
 <% end %>
 
-<% unless @taxonomies.blank? %>
+<% if @taxonomies.any? %>
   <% @taxonomies.each do |taxonomy| %>
     <% taxons = Spree::Taxon.where(taxonomy_id: taxonomy.id) %>
 
     <h3><%= taxonomy.name %></h3>
 
     <ul>
-    <% taxons.each do |taxon| %>
-      <% unless taxon.name == taxonomy.name %><li><%= link_to taxon.name, @public_dir + taxon.permalink %></li><% end %>
-    <% end %>
+      <% taxons.each do |taxon| %>
+        <% unless taxon.name == taxonomy.name %>
+          <li>
+            <%= link_to taxon.name, @public_url + taxon.permalink %>
+          </li>
+        <% end %>
+      <% end %>
     </ul>
   <% end %>
 <% end %>
 
-<% unless @products %>
+<% if @products.any? %>
   <h3>Products</h3>
 
   <ul>
     <% @products.each do |product| %>
-      <li><%= link_to product.name, @public_dir + "products/" + product.slug %></li>
+      <li>
+        <%= link_to product.name, @public_url + 'products/' + product.slug %>
+      </li>
     <% end %>
   </ul>
 <% end %>
