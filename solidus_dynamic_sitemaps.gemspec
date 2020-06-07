@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version     = SolidusDynamicSitemaps::VERSION
   s.author      = 'Jonathan Tapia'
   s.email       = 'jonathan.tapia@magmalabs.io'
-  s.homepage    = 'http://github.com/jtapia/solidus_dynamic_sitemaps'
+  s.homepage    = 'https://github.com/magma-labs/solidus_dynamic_sitemaps'
   s.summary     = 'Solidus Engine for sitemaps'
   s.description = 'Solidus Engine for sitemaps'
 

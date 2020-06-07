@@ -1,4 +1,4 @@
-# Solidus Dynamic Sitemaps [![Build Status](https://travis-ci.org/jtapia/solidus_dynamic_sitemaps.svg?branch=master)](https://travis-ci.org/jtapia/solidus_dynamic_sitemaps)
+# Solidus Dynamic Sitemaps [![Build Status](https://travis-ci.org/magma-labs/solidus_dynamic_sitemaps.svg?branch=master)](https://travis-ci.org/magma-labs/solidus_dynamic_sitemaps)
 
 Solidus Dynamic Sitemaps is a sitemap generator based on the [sitemap_generator][1] gem.
 It adheres to the Sitemap 0.9 protocol specification. This is a continuation of
@@ -27,7 +27,7 @@ Check out the [README][1] for the [sitemap_generator][1].
 
 1. Add the gem to your Solidus store's `Gemfile`:
    ```ruby
-   gem 'solidus_dynamic_sitemaps', github: 'jtapia/solidus_dynamic_sitemaps'
+   gem 'solidus_dynamic_sitemaps', github: 'magma-labs/solidus_dynamic_sitemaps'
    ```
 
 2. Update your bundle:
