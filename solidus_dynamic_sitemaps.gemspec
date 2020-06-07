@@ -1,6 +1,6 @@
-# encoding: UTF-8
+# frozen_string_literal: true
 
-$:.push File.expand_path('../lib', __FILE__)
+$:.push File.expand_path('lib', __dir__)
 require 'solidus_dynamic_sitemaps/version'
 
 Gem::Specification.new do |s|
@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'poltergeist'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'solidus_dev_support'
-  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'vcr'
   s.add_development_dependency 'webmock'
 end
