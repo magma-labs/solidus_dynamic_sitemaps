@@ -1,4 +1,4 @@
-# Solidus Dynamic Sitemaps [![Build Status](https://travis-ci.org/magma-labs/solidus_dynamic_sitemaps.svg?branch=master)](https://travis-ci.org/magma-labs/solidus_dynamic_sitemaps)
+# Solidus Dynamic Sitemaps [![Build Status](https://circleci.com/gh/magma-labs/solidus_dynamic_sitemaps/tree/master.svg?style=shield)](https://circleci.com/gh/magma-labs/solidus_dynamic_sitemaps/tree/master)
 
 Solidus Dynamic Sitemaps is a sitemap generator based on the [sitemap_generator][1] gem.
 It adheres to the Sitemap 0.9 protocol specification. This is a continuation of
