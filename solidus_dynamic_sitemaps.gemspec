@@ -14,20 +14,16 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,models,db,lib}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
 
-  solidus_version = ['>= 1.2.0', '< 3']
-  s.add_dependency 'solidus_core', solidus_version
+  s.add_dependency 'solidus', ['>= 2.0', '< 3']
   s.add_dependency 'solidus_support'
 
   s.add_runtime_dependency 'sitemap_generator'
 
   s.add_development_dependency 'coffee-rails'
-  s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'factory_bot'
-  s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'rubocop', '~> 0.49.0'
-  s.add_development_dependency 'rubocop-rspec', '1.4.0'
-  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'poltergeist'
   s.add_development_dependency 'sass-rails'
+  s.add_development_dependency 'solidus_dev_support'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'sqlite3', '~> 1.3.6'
+  s.add_development_dependency 'vcr'
+  s.add_development_dependency 'webmock'
 end
