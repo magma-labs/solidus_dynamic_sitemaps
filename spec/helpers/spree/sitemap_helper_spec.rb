@@ -1,4 +1,6 @@
-RSpec.describe Spree::SitemapHelper do
+# frozen_string_literal: true
+
+describe Spree::SitemapHelper do
   let(:interpreter) do
     Class.new do
       attr_accessor :entries
