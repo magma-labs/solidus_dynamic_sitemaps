@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class SitemapController < Spree::BaseController
     before_action :load_public_url, only: :index
@@ -69,7 +71,7 @@ module Spree
         nav.each do |_k, v|
           xml.url {
             xml.loc @public_url + v['link']
-            xml.lastmod v['updated'].xmlschema # change timestamp of last modified
+            xml.lastmod v['updated'].xmlschema
             xml.changefreq 'weekly'
             xml.priority '0.8'
           }
@@ -93,9 +95,9 @@ module Spree
       @products.each do |product|
         {}.tap do |h|
           h['name'] = product.name
-          h['link'] = 'products/' + product.permalink	# primary
+          h['link'] = 'products/' + product.permalink
           h['updated'] = product.updated_at
-          nav[h['link']] = h # store primary
+          nav[h['link']] = h
         end
       end
     end

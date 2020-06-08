@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module SitemapHelper
     include Spree::Core::Engine.routes.url_helpers
