@@ -12,9 +12,12 @@ Gem::Specification.new do |s|
   s.summary     = 'Solidus Engine for sitemaps'
   s.description = 'Solidus Engine for sitemaps'
 
+  s.required_ruby_version = '>= 2.4'
+
   s.files = Dir['{app,config,models,db,lib}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
 
-  s.add_dependency 'solidus', ['>= 2.0', '< 3']
+  solidus_version = ['>= 1.2.0', '< 4']
+  s.add_dependency 'solidus_core', solidus_version
   s.add_dependency 'solidus_support'
 
   s.add_runtime_dependency 'sitemap_generator'
