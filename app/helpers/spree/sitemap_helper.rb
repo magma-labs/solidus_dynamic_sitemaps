@@ -57,10 +57,10 @@ module Spree
         end
       end
 
-      if gem_available?('spree_static_content')
-        Spree::Page.visible.each do |page|
-          add(page.slug, options.merge(lastmod: page.updated_at))
-        end
+      return unless gem_available?('spree_static_content')
+
+      Spree::Page.visible.each do |page|
+        add(page.slug, options.merge(lastmod: page.updated_at))
       end
     end
 
@@ -69,7 +69,10 @@ module Spree
     end
 
     def add_taxon(taxon, options = {})
-      add(nested_taxons_path(taxon.permalink), options.merge(lastmod: taxon.products.last_updated)) if taxon.permalink.present?
+      if taxon.permalink.present?
+        add(nested_taxons_path(taxon.permalink),
+          options.merge(lastmod: taxon.products.last_updated))
+      end
       taxon.children.each { |child| add_taxon(child, options) }
     end
 
@@ -77,7 +80,7 @@ module Spree
       Gem::Specification.find_by_name(name)
     rescue Gem::LoadError
       false
-    rescue
+    rescue StandardError
       Gem.available?(name)
     end
 
@@ -97,10 +100,10 @@ module Spree
     #   https://github.com/solidusio/solidus/blob/1-3-stable/core/lib/spree/core/controller_helpers/common.rb#L39
     #   https://github.com/solidusio/solidus/blob/1-3-stable/core/app/controllers/spree/products_controller.rb#L41
     #
-    def video_options(youtube_id, object = false)
+    def video_options(youtube_id, object: false)
       {}.tap do |h|
         h[:description] = meta_data(object)[:description] || {}
-        h[:title] = [SolidusSupport.site_name], object.name].join(' - ') || {}
+        h[:title] = [[SolidusSupport.site_name], object.name].join(' - ') || {}
         h[:thumbnail_loc] = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
         h[:player_loc] = "http://www.youtube.com/v/#{youtube_id}"
         h[:autoplay] = 'ap=1'

@@ -2,15 +2,15 @@
 
 module Spree
   class SitemapController < Spree::BaseController
-    before_action :load_public_url, only: :index
-    before_action :load_products, only: :index
-    before_action :load_taxonomies, only: :index
-    before_action :load_taxons, only: :index
-    before_action :load_pages, only: :index
+    before_action :public_url, only: :index
+    before_action :products, only: :index
+    before_action :taxonomies, only: :index
+    before_action :taxons, only: :index
+    before_action :pages, only: :index
 
     def index
       respond_to do |format|
-        format.html {}
+        format.html
         format.xml { render xml: build_xml, layout: false }
         format.text { render layout: false }
       end
@@ -18,11 +18,11 @@ module Spree
 
     private
 
-    def load_public_url
+    def public_url
       @public_url ||= root_url
     end
 
-    def load_products
+    def products
       if gem_available?('solidus_multi_domain')
         @products = Spree::Product.available.by_store(current_store)
       end
@@ -30,7 +30,7 @@ module Spree
       @products ||= Spree::Product.available
     end
 
-    def load_taxonomies
+    def taxonomies
       if gem_available?('solidus_multi_domain')
         @taxonomies = Spree::Taxonomy.where(store: current_store)
       end
@@ -38,7 +38,7 @@ module Spree
       @taxonomies ||= Spree::Taxonomy.all
     end
 
-    def load_taxons
+    def taxons
       if gem_available?('solidus_multi_domain')
         @taxons = Spree::Taxon.where(store: current_store)
       end
@@ -46,7 +46,7 @@ module Spree
       @taxons ||= Spree::Taxon.all
     end
 
-    def load_pages
+    def pages
       @pages ||= select_static_pages
     end
 
@@ -64,7 +64,7 @@ module Spree
       xml.urlset(xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' ) {
         xml.url {
           xml.loc @public_url
-          xml.lastmod Date.today
+          xml.lastmod Time.zone.today
           xml.changefreq 'daily'
           xml.priority '1.0'
         }
@@ -84,7 +84,7 @@ module Spree
         {}.tap do |h|
           h['name'] = taxon.name
           h['depth'] = taxon.permalink.split('/').size
-          h['link'] = 't/' + taxon.permalink
+          h['link'] = "t/#{taxon.permalink}"
           h['updated'] = taxon.updated_at
           nav[taxon.permalink] = h
         end
@@ -95,7 +95,7 @@ module Spree
       @products.each do |product|
         {}.tap do |h|
           h['name'] = product.name
-          h['link'] = 'products/' + product.permalink
+          h['link'] = "products/#{product.permalink}"
           h['updated'] = product.updated_at
           nav[h['link']] = h
         end
@@ -107,7 +107,7 @@ module Spree
 
       @pages.each do |page|
         nav[page.slug] = { name: page.title,
-                           link: page.slug.gsub(/^\//, ''),
+                           link: page.slug.gsub(%r/^\//, ''),
                            updated: page.updated_at }
       end
 
