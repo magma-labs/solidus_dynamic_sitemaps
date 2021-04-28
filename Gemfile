@@ -15,7 +15,6 @@ gem 'rails', '>0.a'
 gem 'solidus_auth_devise'
 
 # Asset compilation speed
-gem 'mini_racer'
 gem 'sassc-rails', platforms: :mri
 
 gem 'bourbon'
