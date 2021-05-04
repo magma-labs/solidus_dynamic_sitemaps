@@ -13,13 +13,12 @@ require dummy_env
 
 # Requires factories and other useful helpers defined in spree_core.
 require 'solidus_dev_support/rspec/feature_helper'
-require 'spree/testing_support/order_walkthrough'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
-# Requires factories defined in lib/solidus_paypal_commerce_platform/testing_support/factories.rb
+# Requires factories defined in lib/solidus_dynamic_sitemaps/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusDynamicSitemaps::Engine)
 
 RSpec.configure do |config|

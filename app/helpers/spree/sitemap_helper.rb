@@ -103,7 +103,7 @@ module Spree
     def video_options(youtube_id, object: false)
       {}.tap do |h|
         h[:description] = meta_data(object)[:description] || {}
-        h[:title] = [[SolidusSupport.site_name], object.name].join(' - ') || {}
+        h[:title] = [SolidusSupport.site_name, object.name].join(' - ') || {}
         h[:thumbnail_loc] = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
         h[:player_loc] = "http://www.youtube.com/v/#{youtube_id}"
         h[:autoplay] = 'ap=1'

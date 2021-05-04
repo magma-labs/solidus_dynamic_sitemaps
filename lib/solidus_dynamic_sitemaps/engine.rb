@@ -6,7 +6,8 @@ module SolidusDynamicSitemaps
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
 
-    isolate_namespace ::Spree
+    isolate_namespace SolidusDynamicSitemaps
+
     engine_name 'solidus_dynamic_sitemaps'
 
     # use rspec for tests

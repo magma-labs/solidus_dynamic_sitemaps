@@ -18,11 +18,12 @@ Gem::Specification.new do |s|
 
   solidus_version = ['>= 1.2.0', '< 4']
   s.add_dependency 'solidus_core', solidus_version
-  s.add_dependency 'solidus_support', '~> 0.5'
+  s.add_dependency 'solidus_support', ['>= 0.8.0', '< 1']
 
   s.add_runtime_dependency 'sitemap_generator'
 
-  s.add_development_dependency 'solidus_dev_support', '>= 0.3.0'
+  s.add_development_dependency 'cuprite'
+  s.add_development_dependency 'solidus_dev_support', '~> 2.1'
   s.add_development_dependency 'vcr'
   s.add_development_dependency 'webmock'
 end
