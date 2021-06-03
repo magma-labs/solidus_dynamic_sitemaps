@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spree::SitemapHelper do
+RSpec.describe Spree::SitemapHelper do
   subject { interpreter.new }
 
   let(:interpreter) do

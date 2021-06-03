@@ -52,6 +52,9 @@ RSpec/PredicateMatcher:
 RSpec/ContextWording:
   Enabled: false
 
+Gemspec/OrderedDependencies:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Exclude:
     - spec/**/*

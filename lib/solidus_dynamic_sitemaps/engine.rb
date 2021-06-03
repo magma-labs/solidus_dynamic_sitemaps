@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'spree/core'
+require 'solidus_dynamic_sitemaps'
 
 module SolidusDynamicSitemaps
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
 
-    isolate_namespace SolidusDynamicSitemaps
+    isolate_namespace Spree
 
     engine_name 'solidus_dynamic_sitemaps'
 
