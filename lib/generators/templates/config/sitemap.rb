@@ -10,10 +10,10 @@ SitemapGenerator::Sitemap.default_host = "http://#{Spree::Store.default.url}"
 # SitemapGenerator::Sitemap.public_path = 'tmp/'
 
 ## Store on S3 using Fog - Note must add fog to your Gemfile.
-# SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(aws_access_key_id:     Spree::Config[:s3_access_key],
+# SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(aws_access_key_id: Spree::Config[:s3_access_key],
 #                                                                     aws_secret_access_key: Spree::Config[:s3_secret],
-#                                                                     fog_provider:          'AWS',
-#                                                                     fog_directory:         Spree::Config[:s3_bucket])
+#                                                                     fog_provider: 'AWS',
+#                                                                     fog_directory: Spree::Config[:s3_bucket])
 
 ## Inform the map cross-linking where to find the other maps.
 # SitemapGenerator::Sitemap.sitemaps_host = "http://#{Spree::Config[:s3_bucket]}.s3.amazonaws.com/"

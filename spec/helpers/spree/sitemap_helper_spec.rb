@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-describe Spree::SitemapHelper do
+RSpec.describe Spree::SitemapHelper do
+  subject { interpreter.new }
+
   let(:interpreter) do
     Class.new do
       attr_accessor :entries
@@ -16,8 +18,6 @@ describe Spree::SitemapHelper do
       end
     end
   end
-
-  subject { interpreter.new }
 
   context 'Interpreter' do
     %w( add_login
@@ -35,13 +35,13 @@ describe Spree::SitemapHelper do
     end
   end
 
-  context '.default_url_options' do
+  describe '.default_url_options' do
     it 'returns a hash' do
       expect(subject.default_url_options).to be_a Hash
     end
   end
 
-  context '.gem_available?' do
+  describe '.gem_available?' do
     it 'verifies that gem is available' do
       expect(subject.gem_available?('rspec-rails')).to be_truthy
     end
