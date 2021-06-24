@@ -23,7 +23,7 @@ module Spree
     end
 
     def products
-      if gem_available?('solidus_multi_domain')
+      if defined?(SolidusMultiDomain::Engine) == 'constant'
         @products = Spree::Product.available.by_store(current_store)
       end
 
@@ -31,7 +31,7 @@ module Spree
     end
 
     def taxonomies
-      if gem_available?('solidus_multi_domain')
+      if defined?(SolidusMultiDomain::Engine) == 'constant'
         @taxonomies = Spree::Taxonomy.where(store: current_store)
       end
 
@@ -39,7 +39,7 @@ module Spree
     end
 
     def taxons
-      if gem_available?('solidus_multi_domain')
+      if defined?(SolidusMultiDomain::Engine) == 'constant'
         @taxons = Spree::Taxon.where(store: current_store)
       end
 
