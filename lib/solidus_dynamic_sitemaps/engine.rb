@@ -14,5 +14,14 @@ module SolidusDynamicSitemaps
     config.generators do |g|
       g.test_framework :rspec
     end
+
+    def self.activate
+      SitemapGenerator::Interpreter.include(SolidusDynamicSitemaps::Defaults)
+      return unless defined?(SitemapGenerator::LinkSet)
+
+      SitemapGenerator::LinkSet.include(SolidusDynamicSitemaps::Defaults)
+    end
+
+    config.to_prepare(&method(:activate).to_proc)
   end
 end

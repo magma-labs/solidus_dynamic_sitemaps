@@ -1,4 +1,4 @@
-<h1><%= Spree.t(:sitemap) %></h1>
+<h1><%= I18n.t(:sitemap, scope: :spree) %></h1>
 <%= link_to Spree::Store.default.name, @public_url %><br />
 
 <% if @pages.any? %>

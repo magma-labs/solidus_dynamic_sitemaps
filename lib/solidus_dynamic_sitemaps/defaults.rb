@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  module SitemapHelper
-    include Spree::Core::Engine.routes.url_helpers
+module SolidusDynamicSitemaps
+  module Defaults
+    include ::Spree::Core::Engine.routes.url_helpers
 
     def default_url_options
       { host: SitemapGenerator::Sitemap.default_host }
@@ -26,8 +26,10 @@ module Spree
 
     def add_products(options = {})
       available_products = Spree::Product.available.distinct
+      options.merge(lastmod: available_products.last_updated) if available_products.present?
 
-      add(products_path, options.merge(lastmod: available_products.last_updated))
+      add(products_path, options)
+
       available_products.each do |product|
         add_product(product, options)
       end
@@ -35,29 +37,11 @@ module Spree
 
     def add_product(product, options = {})
       opts = options.merge(lastmod: product.updated_at)
-
-      if gem_available?('spree_videos') && product.videos.present?
-        # TODO: add exclusion list configuration option
-        # https://sites.google.com/site/webmasterhelpforum/en/faq-video-sitemaps#multiple-pages
-
-        # don't include all the videos on the page to avoid duplicate title warnings
-        primary_video = product.videos.first
-        opts[:video] = [video_options(primary_video.youtube_ref, product)]
-      end
-
       add(product_path(product), opts)
     end
 
     def add_pages(options = {})
-      # TODO: this should be refactored to add_pages & add_page
-
-      if gem_available?('spree_essential_cms')
-        Spree::Page.active.each do |page|
-          add(page.path, options.merge(lastmod: page.updated_at))
-        end
-      end
-
-      return unless gem_available?('spree_static_content')
+      return unless gem_available?('solidus_static_content')
 
       Spree::Page.visible.each do |page|
         add(page.slug, options.merge(lastmod: page.updated_at))
@@ -70,18 +54,17 @@ module Spree
 
     def add_taxon(taxon, options = {})
       if taxon.permalink.present?
-        add(nested_taxons_path(taxon.permalink),
-          options.merge(lastmod: taxon.products.last_updated))
+        options.merge(lastmod: taxon.products.last_updated) if taxon.products.present?
+        add(nested_taxons_path(taxon.permalink), options)
       end
+
       taxon.children.each { |child| add_taxon(child, options) }
     end
 
     def gem_available?(name)
-      Gem::Specification.find_by_name(name)
-    rescue Gem::LoadError
-      false
+      defined?("#{name.camelize}::Engine".constantize) == 'constant'
     rescue StandardError
-      Gem.available?(name)
+      false
     end
 
     private

@@ -2,8 +2,10 @@
 
 module Spree
   module ProductDecorator
-    def self.prepended(klass)
-      klass.scope :last_updated, -> { available.order(updated_at: :asc).first }
+    def self.prepended(base)
+      base.class_eval do
+        scope :last_updated, -> { order(updated_at: :asc).first }
+      end
     end
 
     ::Spree::Product.prepend(self)

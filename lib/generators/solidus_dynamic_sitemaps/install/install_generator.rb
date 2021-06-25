@@ -3,7 +3,7 @@
 module SolidusDynamicSitemaps
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      source_root File.expand_path('templates', __dir__)
+      source_root File.expand_path('../../templates', __dir__)
 
       desc 'Configures your Rails application for use with solidus_sitemap'
       def copy_config
