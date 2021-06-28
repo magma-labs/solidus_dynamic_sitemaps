@@ -7,11 +7,12 @@ module Spree
     before_action :taxonomies, only: :index
     before_action :taxons, only: :index
     before_action :pages, only: :index
+    before_action :nav, only: :index
 
     def index
       respond_to do |format|
         format.html
-        format.xml { render xml: build_xml, layout: false }
+        format.xml { render xml: build_xml(@nav), layout: false }
         format.text { render layout: false }
       end
     end
@@ -51,15 +52,16 @@ module Spree
     end
 
     def nav
-      nav = build_taxon_hash
-      nav = build_pages_hash(nav)
-      nav = add_products_to_tax(nav, false)
+      nav = {}
+      nav = build_taxon_hash(nav, @taxons)
+      nav = build_pages_hash(nav, @pages)
+      nav = add_products_to_tax(nav, @products, false)
 
       @nav ||= nav
     end
 
-    def build_xml
-      xml = Builder::XmlMarkup.new(target: output, indent: 2)
+    def build_xml(nav)
+      xml = Builder::XmlMarkup.new(indent: 2)
       xml.instruct! :xml, version: '1.0', encoding: 'UTF-8'
       xml.urlset(xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' ) {
         xml.url {
@@ -68,6 +70,7 @@ module Spree
           xml.changefreq 'daily'
           xml.priority '1.0'
         }
+
         nav.each do |_k, v|
           xml.url {
             xml.loc @public_url + v['link']
@@ -79,36 +82,45 @@ module Spree
       }
     end
 
-    def build_taxon_hash
-      @taxons.each do |taxon|
+    def build_taxon_hash(nav, taxons)
+      taxons.each do |taxon|
         {}.tap do |h|
           h['name'] = taxon.name
           h['depth'] = taxon.permalink.split('/').size
           h['link'] = "t/#{taxon.permalink}"
           h['updated'] = taxon.updated_at
+
           nav[taxon.permalink] = h
         end
       end
+
+      nav
     end
 
-    def add_products_to_tax(nav, _multiples_allowed)
-      @products.each do |product|
+    def add_products_to_tax(nav, products, _multiples_allowed)
+      products.each do |product|
         {}.tap do |h|
           h['name'] = product.name
-          h['link'] = "products/#{product.permalink}"
+          h['link'] = "products/#{product.slug}"
           h['updated'] = product.updated_at
+
           nav[h['link']] = h
         end
       end
+
+      nav
     end
 
-    def build_pages_hash(nav)
-      return nav if @pages.empty?
+    def build_pages_hash(nav, pages)
+      return nav if pages.empty?
 
-      @pages.each do |page|
-        nav[page.slug] = { name: page.title,
-                           link: page.slug.gsub(%r/^\//, ''),
-                           updated: page.updated_at }
+      pages.each do |page|
+        {}.tap do |h|
+          h['name'] = page.title
+          h['link'] = page.slug.gsub(%r/^\//, '')
+          h['updated'] = page.updated_at
+          nav[h['link']] = h
+        end
       end
 
       nav
