@@ -27,7 +27,8 @@ RSpec.describe SolidusDynamicSitemaps::Defaults do
 
   describe '.gem_available?' do
     it 'verifies that gem is available' do
-      allow(subject).to receive(:gem_available?).and_return(true)
+      allow_any_instance_of(SitemapGenerator::Interpreter).
+        to receive(:gem_available?).with('solidus_auth_devise').and_return(true)
       expect(subject.gem_available?('solidus_auth_devise')).to be_truthy
     end
 
