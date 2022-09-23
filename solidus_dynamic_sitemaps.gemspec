@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   if s.respond_to?(:metadata)
     s.metadata['homepage_uri'] = s.homepage if s.homepage
     s.metadata['source_code_uri'] = s.homepage if s.homepage
+    s.metadata['rubygems_mfa_required'] = 'true'
   end
 
   s.required_ruby_version = Gem::Requirement.new('> 2.5')
