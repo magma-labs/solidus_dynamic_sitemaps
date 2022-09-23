@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe SolidusDynamicSitemaps::Defaults do
-  let!(:subject) { SitemapGenerator::Interpreter.include(described_class).new }
+  subject { SitemapGenerator::Interpreter.include(described_class).new }
 
   describe 'Interpreter' do
     %w( add_login
@@ -40,7 +40,7 @@ RSpec.describe SolidusDynamicSitemaps::Defaults do
   end
 
   describe '.main_app' do
-    context 'returns the url helpers module for the application' do
+    context 'with url helpers module for the application' do
       it { expect(subject).to respond_to(:url_for, :spree_path, :_routes) }
     end
   end
